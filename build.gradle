@@ -1,9 +1,10 @@
 plugins {
     id 'java-gradle-plugin'
     id 'maven-publish'
+    id 'com.gradle.plugin-publish' version '1.2.1'
 }
 
-group = 'net.vansen'
+group = 'io.github.vansencool'
 version = '1.0.0'
 
 repositories {
@@ -15,10 +16,16 @@ dependencies {
 }
 
 gradlePlugin {
+    website = 'https://github.com/vansencool/dexternally'
+    vcsUrl = 'https://github.com/vansencool/dexternally.git'
+
     plugins {
         dexternally {
-            id = 'net.vansen.dexternally'
-            implementationClass = 'net.vansen.dexternally.DExternallyPlugin'
+            id = 'io.github.vansencool.dexternally'
+            displayName = 'DExternally'
+            description = 'A simple gradle plugin to upload (build) files to SFTP'
+            tags.addAll('sftp', 'uploader', 'deploy')
+            implementationClass = 'io.github.vansencool.dexternally.DExternallyPlugin'
         }
     }
 }

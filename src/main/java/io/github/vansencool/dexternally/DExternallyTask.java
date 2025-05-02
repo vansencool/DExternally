@@ -1,4 +1,4 @@
-package net.vansen.dexternally;
+package io.github.vansencool.dexternally;
 
 import net.schmizz.sshj.SSHClient;
 import net.schmizz.sshj.sftp.SFTPClient;
@@ -8,37 +8,70 @@ import org.gradle.api.tasks.*;
 
 import java.io.File;
 
+/**
+ * A Gradle task that uploads a JAR file to a remote server using SSH.
+ * <p>
+ * This task uses the SSHJ library.
+ * </p>
+ */
 @SuppressWarnings("unused")
 public abstract class DExternallyTask extends DefaultTask {
 
+    /**
+     * The host of the remote server.
+     */
     @Input
     public String host;
 
+    /**
+     * The user for SSH authentication.
+     */
     @Input
     public String user;
 
+    /**
+     * The password for SSH authentication.
+     */
     @Input
     public String password;
 
+    /**
+     * The remote directory where the file will be uploaded.
+     */
     @Input
     public String remote;
 
+    /**
+     * The port for SSH connection.
+     */
     @Input
     @Optional
     public Integer port = 22;
 
+    /**
+     * Whether to use compression for the SSH connection.
+     */
     @Input
     @Optional
     public Boolean compression = false;
 
+    /**
+     * The timeout for the SSH connection in milliseconds.
+     */
     @Input
     @Optional
     public Integer sshTimeout = 10000;
 
+    /**
+     * The timeout for the connection in milliseconds.
+     */
     @Input
     @Optional
     public Integer connectTimeout = 10000;
 
+    /**
+     * The JAR file to be uploaded.
+     */
     @InputFile
     @PathSensitive(PathSensitivity.RELATIVE)
     public File jarFile;
