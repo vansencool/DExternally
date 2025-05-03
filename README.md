@@ -37,7 +37,7 @@ You can configure the task via properties inside your gradle build.
 ```groovy
 plugins {
     id 'java'
-    id 'net.vansen.dexternally' version '1.0.0'
+    id 'net.vansen.dexternally' version '1.0.1'
 }
 
 dexternallyUpload {
