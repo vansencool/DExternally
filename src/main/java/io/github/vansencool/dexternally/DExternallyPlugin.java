@@ -9,7 +9,13 @@ import org.gradle.api.Project;
  * This plugin registers the `dexternalUpload` task, which can be used to upload files to a remote server.
  * </p>
  */
+@SuppressWarnings("unused")
 public class DExternallyPlugin implements Plugin<Project> {
+
+    /**
+     * Constructor for the DExternallyPlugin.
+     */
+    public DExternallyPlugin() {}
 
     @Override
     public void apply(Project project) {

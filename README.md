@@ -1,32 +1,32 @@
 # DExternally
 
-**A simple, fast-enough Gradle plugin to upload your built JAR files via SFTP.**
+**A simple Gradle plugin to upload your built files via SFTP.**
 
 ---
 
-## 💡 What it does
+## What it does
 
-DExternally provides a customizable Gradle task (`dexternallyUpload`) to upload a compiled `.jar` file to a remote server via SFTP.
+DExternally provides a customizable Gradle task (`dexternallyUpload`) to upload one or more compiled files (e.g., JARs) to a remote server via SFTP.
 
 ---
 
 ## Configuration
 
-You can configure the task via properties inside your `build.gradle`.
+You can configure the task via properties inside your gradle build.
 
 ### Available properties
 
-| Property          | Type     | Required | Default  | Description                                  |
-|------------------|----------|----------|----------|----------------------------------------------|
-| `host`           | `String` | ✅       | —        | Remote host IP or domain                     |
-| `user`           | `String` | ✅       | —        | Username                                     |
-| `password`       | `String` | ✅       | —        | Password                                     |
-| `remote`         | `String` | ✅       | —        | Full remote directory path (no trailing `/`) |
-| `jarFile`        | `File`   | ✅       | —        | JAR file to upload                           |
-| `port`           | `Int`    | ❌       | `22`     | Port                                         |
-| `compression`    | `Bool`   | ❌       | `false`  | Enable SSH compression                       |
-| `sshTimeout`     | `Int`    | ❌       | `10000`  | Timeout for SSH in milliseconds              |
-| `connectTimeout` | `Int`    | ❌       | `10000`  | Timeout for connection in milliseconds       |
+| Property         | Type         | Required | Default | Description                                  |
+| ---------------- |--------------| -------- |---------|----------------------------------------------|
+| `host`           | `String`     | ✅        | —       | Remote host IP or domain                     |
+| `user`           | `String`     | ✅        | —       | Username                                     |
+| `password`       | `String`     | ✅        | —       | Password                                     |
+| `files`          | `List<File>` | ✅        | —       | List of files to upload                      |
+| `remote`         | `String`     | ❌        | `/`     | Remote directory path (defaults to root dir) |
+| `port`           | `Integer`    | ❌        | `22`    | Port                                         |
+| `compression`    | `Boolean`    | ❌        | `false` | Enable SSH compression                       |
+| `sshTimeout`     | `Integer`    | ❌        | `10000` | Timeout for SSH in milliseconds              |
+| `connectTimeout` | `Integer`    | ❌        | `10000` | Timeout for connection in milliseconds       |
 
 ---
 
@@ -45,6 +45,23 @@ dexternallyUpload {
     user = "root"
     password = "your_password"
     port = 2222
-    remote = "/path/to/directory"
-    jarFile = file("build/libs/your-plugin.jar")
+    remote = "/apps/myapp"
+    files = List.of("build/libs/MyApp-1.0.jar")
 }
+```
+
+---
+
+### Example with Shadow JAR
+
+```groovy
+dexternallyUpload {
+    dependsOn tasks.shadowJar
+    host = "example.com"
+    user = "root"
+    password = "your_password"
+    files = List.of(tasks.shadowJar.archiveFile.get().asFile) // upload built (shadow) jar
+}
+```
+
+---
